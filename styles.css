@@ -73,8 +73,7 @@ body {
   --line-soft: rgba(22, 21, 19, 0.1);
   --error: #7e1622;
 }
-.crest-stage, .countdown, .signup-row, .signup.is-done .signup-note,
-.take-card, .plane-wrap, .top-link {
+.step, .countdown, .signup-row, .signup.is-done .signup-note, .top-link {
   --text-dim: #4b4945;
   --text-faint: #67645e;
   --line: #dcd9d2;
@@ -134,8 +133,8 @@ button, input { font: inherit; color: inherit; }
 /* ── Hero ───────────────────────────────────────────── */
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-  gap: clamp(32px, 6vw, 96px);
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 80px);
   align-items: center;
   padding-block: clamp(40px, 8vw, 112px) clamp(56px, 8vw, 120px);
 }
@@ -151,38 +150,35 @@ h1 {
 }
 .lede { font-size: 17px; line-height: 1.6; color: var(--text-dim); max-width: 46ch; }
 
-.hero-crest { display: grid; justify-items: center; gap: 20px; }
-.crest-stage {
-  width: 100%;
-  max-width: 360px;
-  aspect-ratio: 1;
-  display: grid;
-  place-items: center;
-  background: var(--surface);
-  border: 1px solid var(--line-soft);
-  border-radius: var(--r-lg);
+/* Two app screens: Home behind, the reels feed in front. */
+.hero-phones {
   position: relative;
-  isolation: isolate;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 440 / 660;
+  justify-self: end;
 }
-/* A faint plane behind the crest — the grid it was placed on. */
-.crest-stage::before {
-  content: "";
-  position: absolute;
-  inset: 24px;
-  z-index: -1;
-  background:
-    linear-gradient(var(--line-soft), var(--line-soft)) center / 1px 100% no-repeat,
-    linear-gradient(var(--line-soft), var(--line-soft)) center / 100% 1px no-repeat;
-}
-.hero-crest figcaption { display: grid; justify-items: center; gap: 4px; text-align: center; }
-.crest-name { font-family: var(--display); font-weight: 600; font-size: 20px; }
-.crest-code { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; color: var(--text-dim); }
-.crest-hint { font-size: 13px; color: var(--text-faint); margin-top: 6px; }
+.hero-phones .phone { position: absolute; }
+.phone--back { left: 0; top: 0; width: 56%; }
+.phone--front { right: 0; top: 11%; width: 62%; }
 
 @media (max-width: 860px) {
   .hero { grid-template-columns: 1fr; }
-  .hero-crest { justify-self: center; }
-  .crest-stage { max-width: 240px; }
+  .hero-phones { justify-self: center; max-width: 360px; }
+}
+
+/* ── Phone frame ────────────────────────────────────── */
+.phone {
+  background: #161513;
+  padding: 2.6%;
+  border-radius: 14% / 6.5%;
+  box-shadow: 0 30px 60px -20px rgba(22, 21, 19, 0.45), 0 2px 6px rgba(22, 21, 19, 0.2);
+}
+.phone img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 11.8% / 5.4%;
 }
 
 /* ── Crest (web port of components/Crest.tsx) ───────── */
@@ -211,9 +207,6 @@ h1 {
   -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
   -webkit-mask-position: center; mask-position: center;
 }
-.crest--xl { --size: clamp(168px, 22vw, 232px); }
-.crest--md { --size: 64px; }
-.crest--sm { --size: 40px; }
 .crest.is-fading { opacity: 0; }
 
 /* ── Signup ─────────────────────────────────────────── */
@@ -311,8 +304,7 @@ h1 {
 }
 
 /* ── Sections ───────────────────────────────────────── */
-.demo, .grids, .principles { padding-block: clamp(72px, 10vw, 136px) 0; }
-.section-head { display: grid; gap: 14px; max-width: 640px; margin-bottom: clamp(32px, 5vw, 56px); }
+.how, .principles { padding-block: clamp(72px, 10vw, 136px) 0; }
 h2 {
   font-family: var(--display);
   font-weight: 600;
@@ -320,119 +312,74 @@ h2 {
   line-height: 1.02;
   letter-spacing: -0.024em;
   text-wrap: balance;
+  margin-bottom: clamp(28px, 4vw, 48px);
 }
-.section-sub { color: var(--text-dim); font-size: 16px; max-width: 54ch; }
 
-/* ── Demo ───────────────────────────────────────────── */
-.demo-body {
+/* ── How it works ───────────────────────────────────── */
+.steps {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(16px, 3vw, 32px);
-  align-items: stretch;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  counter-reset: none;
 }
-@media (max-width: 860px) { .demo-body { grid-template-columns: 1fr; } }
+@media (max-width: 1080px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .steps { grid-template-columns: 1fr; } }
 
-.take-card {
+.step {
   display: grid;
-  gap: 24px;
+  grid-template-rows: auto auto auto 1fr;
+  gap: 8px;
   align-content: start;
   background: var(--surface);
   border: 1px solid var(--line-soft);
   border-radius: var(--r-lg);
-  padding: clamp(20px, 3vw, 32px);
+  padding: 12px 12px 24px;
 }
-.take-meta { display: flex; justify-content: space-between; align-items: center; }
-.text-btn {
-  border: 0; background: none; padding: 4px 0; cursor: pointer;
-  font-size: 13px; color: var(--text-faint); text-decoration: underline; text-underline-offset: 3px;
-}
-.text-btn:hover { color: var(--text); }
-.take {
-  font-family: var(--display);
-  font-weight: 500;
-  font-size: clamp(24px, 2.6vw, 32px);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-  min-height: 3.45em;
-  text-wrap: balance;
-  transition: opacity 180ms var(--ease);
-}
-.take.is-fading { opacity: 0; }
-.votes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-.vote {
-  border: 1px solid var(--line);
-  background: var(--surface);
-  border-radius: var(--r-sm);
-  padding: 12px 8px;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 140ms var(--ease), border-color 140ms var(--ease), color 140ms var(--ease), transform 120ms var(--ease);
-}
-.vote:active { transform: scale(0.97); }
-.vote--up:hover { background: var(--up-soft); border-color: var(--up); }
-.vote--down:hover { background: var(--down-soft); border-color: var(--down); }
-.vote[disabled] { opacity: 0.45; cursor: default; }
-.vote[disabled]:hover { background: var(--surface); border-color: var(--line); }
-
-.take-result {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  padding-top: 20px;
-  border-top: 1px solid var(--line-soft);
-}
-.result-name { font-family: var(--display); font-weight: 600; font-size: 20px; margin-top: 2px; }
-.result-meaning { font-size: 14px; color: var(--text-dim); }
-.demo-foot { font-size: 13px; color: var(--text-faint); }
-
-.plane-wrap {
-  background: var(--surface);
-  border: 1px solid var(--line-soft);
-  border-radius: var(--r-lg);
-  padding: clamp(12px, 2vw, 24px);
+.step-visual {
+  height: 280px;
+  margin-bottom: 12px;
+  border-radius: var(--r-md);
+  background: var(--surface2);
+  overflow: hidden;
   display: grid;
   place-items: center;
 }
-.plane { width: 100%; max-width: 520px; height: auto; overflow: visible; }
-.plane .axis { stroke: var(--line); stroke-width: 1; }
-.plane .frame { fill: none; stroke: var(--line-soft); stroke-width: 1; }
-.plane .ref { fill: var(--surface3); stroke: var(--line); stroke-width: 1; }
-.plane .ref.is-near { fill: var(--text); stroke: var(--text); }
-.plane .ref-label { font-size: 7.5px; fill: var(--text-faint); font-family: var(--body); }
-.plane .ref-label.is-near { fill: var(--text); font-weight: 600; }
-.plane .axis-label { font-size: 7.5px; fill: var(--text-dim); font-family: var(--body); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
-.plane .trail { fill: none; stroke: var(--text-faint); stroke-width: 1; stroke-dasharray: 2 3; }
-.plane .you { fill: var(--text); }
-.plane .you-ring { fill: none; stroke: var(--text); stroke-width: 1; opacity: 0.25; }
-.plane .you-group { transition: transform 600ms var(--ease); }
-@media (prefers-reduced-motion: reduce) { .plane .you-group { transition: none; } }
+/* Screens show their top half and run off the bottom of the panel. */
+.step-visual .phone--sm { width: 170px; align-self: start; margin-top: 28px; }
+/* The photo viewer's top third is black chrome — start at the photo instead. */
+.step-visual .phone--crop { margin-top: -72px; }
+.step-num { font-family: var(--mono); font-size: 12px; color: var(--text-faint); padding-inline: 8px; }
+.step h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  padding-inline: 8px;
+}
+.step p { color: var(--text-dim); padding-inline: 8px; }
 
-/* ── Grid list ──────────────────────────────────────── */
-.grid-list { border-top: 1px solid var(--line); }
-.grid-row {
+/* Step 2: the feed's two reaction buttons, as in VoteControls. */
+.react-demo { display: grid; gap: 20px; justify-items: center; }
+.react-row { display: flex; gap: 10px; }
+.react-btn {
   display: grid;
-  grid-template-columns: 56px minmax(140px, 1fr) minmax(0, 1.6fr) minmax(0, 1.4fr);
-  gap: 24px;
-  align-items: center;
-  padding-block: 24px;
-  border-bottom: 1px solid var(--line);
+  place-items: center;
+  width: 92px;
+  height: 48px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
 }
-.grid-index { font-family: var(--mono); font-size: 12px; color: var(--text-faint); }
-.grid-name { font-family: var(--display); font-weight: 600; font-size: 26px; letter-spacing: -0.01em; }
-.grid-axes { font-size: 14px; color: var(--text-dim); display: grid; gap: 2px; }
-.grid-axes span::before { content: ""; display: inline-block; width: 10px; height: 1px; background: var(--text-faint); vertical-align: middle; margin-right: 8px; }
-.grid-shape { display: grid; gap: 10px; }
-.grid-shape .label { color: var(--text-faint); }
-.swatches { display: flex; gap: 3px; flex-wrap: wrap; }
-.swatch { width: 18px; height: 18px; border-radius: 5px; box-shadow: inset 0 0 0 1px rgba(22, 21, 19, 0.06); }
-.mini-animals { display: flex; gap: 3px; flex-wrap: wrap; }
-.mini-animals .crest { --size: 30px; }
+.react-btn svg { width: 22px; height: 22px; fill: none; stroke: var(--text); stroke-width: 1.6; stroke-linejoin: round; }
+.react-key { display: grid; gap: 6px; font-size: 14px; }
+.react-key div { display: flex; gap: 10px; }
+.react-key dt { width: 40px; font-weight: 600; }
+.react-key dd { color: var(--text-dim); }
 
-@media (max-width: 860px) {
-  .grid-row { grid-template-columns: 40px 1fr; row-gap: 12px; }
-  .grid-axes, .grid-shape { grid-column: 2; }
-}
+/* Step 3: the identity crest. */
+.type-demo { display: grid; justify-items: center; gap: 14px; }
+.crest--lg { --size: 140px; }
+.crest-name { font-family: var(--display); font-weight: 600; font-size: 18px; }
 
 /* ── Principles ─────────────────────────────────────── */
 .principle-list {
@@ -463,7 +410,7 @@ h2 {
   gap: 16px;
   padding-block: clamp(96px, 12vw, 168px);
 }
-.closing h2 { max-width: 16ch; }
+.closing h2 { max-width: 16ch; margin-bottom: 0; }
 .closing-sub { color: var(--text-dim); font-size: 16px; margin-bottom: 12px; }
 .closing .signup { width: 100%; }
 

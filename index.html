@@ -4,10 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PNYX — Join the waitlist</title>
-  <meta name="description" content="PNYX is a short-form feed where every reaction you cast places you on five personality grids. No quiz, no ads. Opens 2 November 2026." />
+  <meta name="description" content="PNYX is a video and photo app that works out your personality from what you like and dislike. Out on iPhone on 2 November 2026." />
   <meta name="theme-color" content="#c4c7cb" />
-  <meta property="og:title" content="PNYX — Everyone should know what everyone really thinks." />
-  <meta property="og:description" content="React to real content. Get a personality you earned, not one you picked. Opens 2 November 2026." />
+  <meta property="og:title" content="PNYX — a video app that learns your personality" />
+  <meta property="og:description" content="Watch short videos and photos, react to them, and find out what kind of person you are. Out 2 November 2026." />
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,7 +18,7 @@
   <header class="top wrap">
     <a class="wordmark" href="#" aria-label="PNYX home">PNYX</a>
     <div class="top-meta">
-      <span class="top-date">Opens 02.11.2026</span>
+      <span class="top-date">Out 02.11.2026</span>
       <a class="top-link" href="#join">Join the waitlist</a>
     </div>
   </header>
@@ -27,12 +27,12 @@
     <!-- Hero -->
     <section class="hero wrap" id="join">
       <div class="hero-copy">
-        <p class="label">A short-form social app &middot; coming to iOS</p>
-        <h1>Everyone should know what everyone really thinks.</h1>
+        <p class="label">For iPhone &middot; out 2 November</p>
+        <h1>A video app that learns your personality.</h1>
         <p class="lede">
-          PNYX is a feed of short videos, images and opinions. There's no personality quiz.
-          Every reaction you cast quietly moves you across five grids, until a type emerges
-          that's actually yours.
+          Watch short videos and photos, and like or dislike each one. From what you react to,
+          PNYX works out what kind of person you are, then shows you who thinks like you.
+          There's no quiz to fill in.
         </p>
 
         <form class="signup" data-signup novalidate>
@@ -41,12 +41,12 @@
             <input id="email-hero" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required />
             <button type="submit">Join the waitlist</button>
           </div>
-          <p class="signup-note" data-note>One email when the doors open. Nothing else, and no ads, ever.</p>
+          <p class="signup-note" data-note>We'll email you once, when it's out.</p>
         </form>
 
         <section class="countdown" aria-labelledby="countdown-title">
           <div class="countdown-head">
-            <p class="label" id="countdown-title">Doors open</p>
+            <p class="label" id="countdown-title">Out in</p>
             <p class="countdown-date"><time datetime="2026-11-02T00:00:00+01:00">Monday, 2 November 2026</time></p>
           </div>
           <div class="clock" data-clock role="timer" aria-live="off">
@@ -55,114 +55,105 @@
             <div class="unit"><span class="num" data-minutes>00</span><span class="unit-label">Min</span></div>
             <div class="unit"><span class="num" data-seconds>00</span><span class="unit-label">Sec</span></div>
           </div>
-          <p class="clock-live" data-live hidden>PNYX is open. Check your inbox.</p>
+          <p class="clock-live" data-live hidden>PNYX is out. Check your inbox.</p>
         </section>
       </div>
 
-      <figure class="hero-crest" aria-label="A sample PNYX identity">
-        <div class="crest-stage">
-          <div class="crest crest--xl" data-hero-crest></div>
-        </div>
-        <figcaption>
-          <span class="crest-name" data-hero-name>Wolf</span>
-          <span class="crest-code" data-hero-code>LO·GREY·TE·EL·CHA</span>
-          <span class="crest-hint">A sample type. Yours unlocks after 50 reactions.</span>
-        </figcaption>
-      </figure>
+      <div class="hero-phones" aria-hidden="true">
+        <div class="phone phone--back"><img src="assets/screens/home.jpg" alt="" width="440" height="956" /></div>
+        <div class="phone phone--front"><img src="assets/screens/feed.jpg" alt="" width="440" height="956" /></div>
+      </div>
     </section>
 
-    <!-- Demo -->
-    <section class="demo wrap" aria-labelledby="demo-title">
-      <div class="section-head">
-        <p class="label">01 &mdash; Try it</p>
-        <h2 id="demo-title">React. Don't describe yourself.</h2>
-        <p class="section-sub">
-          Vote on a few takes below and watch where they put you on the Values grid &mdash; one of five.
-          Love and like pull you toward a take; dislike and hate push you away.
-        </p>
-      </div>
+    <!-- How it works -->
+    <section class="how wrap" aria-labelledby="how-title">
+      <h2 id="how-title">How it works</h2>
 
-      <div class="demo-body">
-        <div class="take-card">
-          <div class="take-meta">
-            <span class="label" data-take-count>Take 1 of 8</span>
-            <button class="text-btn" type="button" data-reset>Start over</button>
+      <ol class="steps">
+        <li class="step">
+          <div class="step-visual">
+            <div class="phone phone--sm phone--crop"><img src="assets/screens/photo.jpg" alt="A photo post in the PNYX feed, with like and dislike buttons under it" width="440" height="956" loading="lazy" /></div>
           </div>
-          <blockquote class="take" data-take>Grandparents' recipes should never be "improved."</blockquote>
-          <div class="votes" role="group" aria-label="Your reaction">
-            <button type="button" class="vote vote--down" data-vote="-1">Hate</button>
-            <button type="button" class="vote vote--down" data-vote="-0.5">Dislike</button>
-            <button type="button" class="vote vote--up" data-vote="0.5">Like</button>
-            <button type="button" class="vote vote--up" data-vote="1">Love</button>
-          </div>
-          <div class="take-result" data-result>
-            <div class="crest crest--md" data-demo-crest></div>
-            <div>
-              <p class="label">Closest type so far</p>
-              <p class="result-name" data-demo-name>Dragon &middot; Adapt</p>
-              <p class="result-meaning" data-demo-meaning>Balances independence and belonging</p>
+          <span class="step-num">1</span>
+          <h3>Scroll the feed</h3>
+          <p>Short videos and photos, each one posted by someone with an opinion.</p>
+        </li>
+
+        <li class="step">
+          <div class="step-visual">
+            <div class="react-demo" aria-hidden="true">
+              <div class="react-row">
+                <span class="react-btn"><svg viewBox="0 0 24 24"><path d="M7 10v11H3V10h4Zm2 11V10l4.5-8a2.5 2.5 0 0 1 2.4 3.1L15 9h5.2a2 2 0 0 1 2 2.4l-1.6 8A2 2 0 0 1 18.6 21H9Z"/></svg></span>
+                <span class="react-btn"><svg viewBox="0 0 24 24"><path d="M7 14V3H3v11h4Zm2-11v11l4.5 8a2.5 2.5 0 0 0 2.4-3.1L15 15h5.2a2 2 0 0 0 2-2.4l-1.6-8A2 2 0 0 0 18.6 3H9Z"/></svg></span>
+              </div>
+              <dl class="react-key">
+                <div><dt>Tap</dt><dd>Like or dislike</dd></div>
+                <div><dt>Hold</dt><dd>Love or hate</dd></div>
+              </dl>
             </div>
           </div>
-          <p class="demo-foot">A simplified, single-grid version. In the app it takes 50 reactions across all five grids, and the math runs on our servers.</p>
-        </div>
+          <span class="step-num">2</span>
+          <h3>React to it</h3>
+          <p>Tap thumbs up or down. Hold the button down to love or hate something instead.</p>
+        </li>
 
-        <div class="plane-wrap">
-          <svg class="plane" viewBox="-130 -130 260 260" data-plane role="img" aria-label="Values grid showing your position">
-            <title>Values grid</title>
-          </svg>
-        </div>
-      </div>
+        <li class="step">
+          <div class="step-visual">
+            <figure class="type-demo" aria-label="A sample PNYX type">
+              <div class="crest crest--lg" data-hero-crest></div>
+              <figcaption class="crest-name" data-hero-name>Wolf &middot; Loyalty</figcaption>
+            </figure>
+          </div>
+          <span class="step-num">3</span>
+          <h3>Get your type</h3>
+          <p>After 50 reactions you get an animal and a set of colours based on how you react. It changes as you do.</p>
+        </li>
+
+        <li class="step">
+          <div class="step-visual">
+            <div class="phone phone--sm"><img src="assets/screens/people.jpg" alt="The People screen, listing other users by how closely they match you" width="440" height="956" loading="lazy" /></div>
+          </div>
+          <span class="step-num">4</span>
+          <h3>Find your people</h3>
+          <p>See how closely you match anyone else, as a percentage. Use it for friends, dates, or people to work with.</p>
+        </li>
+      </ol>
     </section>
 
-    <!-- Five grids -->
-    <section class="grids wrap" aria-labelledby="grids-title">
-      <div class="section-head">
-        <p class="label">02 &mdash; The five grids</p>
-        <h2 id="grids-title">Five planes. One portrait.</h2>
-        <p class="section-sub">
-          Every post is scored against the same five grids before anyone sees it. Each grid shapes one part of your identity.
-        </p>
-      </div>
-      <ol class="grid-list" data-grid-list></ol>
-    </section>
-
-    <!-- Principles -->
+    <!-- What's different -->
     <section class="principles wrap" aria-labelledby="principles-title">
-      <div class="section-head">
-        <p class="label">03 &mdash; What we won't do</p>
-        <h2 id="principles-title">Built so it can't flatter you.</h2>
-      </div>
+      <h2 id="principles-title">What's different</h2>
       <dl class="principle-list">
         <div>
-          <dt>Earned, not chosen.</dt>
-          <dd>Your position is computed from what you actually reacted to. You can't edit it, and you can't answer the way you'd like to be seen.</dd>
+          <dt>You can't fake it</dt>
+          <dd>Your type comes from what you actually react to, not from answers you pick. Nobody can edit it, including you.</dd>
         </div>
         <div>
-          <dt>Unpopular is allowed.</dt>
-          <dd>Crude, contrarian, uncomfortable &mdash; if a take is genuine and within the rules, it belongs in the feed.</dd>
+          <dt>Opinions are allowed</dt>
+          <dd>Posts can be unpopular or blunt. If it's honest and within the rules, it stays up.</dd>
         </div>
         <div>
-          <dt>You decide who sees you.</dt>
-          <dd>Three privacy tiers set how much of your profile other people can see, from your full type to nothing at all.</dd>
+          <dt>You choose who sees you</dt>
+          <dd>Show other people your full profile, part of it, or nothing at all.</dd>
         </div>
         <div>
-          <dt>No ads. Ever.</dt>
-          <dd>PNYX is free, and there is no ad inventory to sell. The feed isn't built to keep you scrolling for someone else.</dd>
+          <dt>No ads</dt>
+          <dd>PNYX is free and doesn't show ads.</dd>
         </div>
       </dl>
     </section>
 
     <!-- Closing CTA -->
     <section class="closing wrap" aria-labelledby="closing-title">
-      <h2 id="closing-title">Find out what you really think.</h2>
-      <p class="closing-sub"><span data-days-inline>30 days</span> until the doors open. Get one email when they do.</p>
+      <h2 id="closing-title">Out on 2 November.</h2>
+      <p class="closing-sub"><span data-days-inline>30 days</span> to go. Leave your email and we'll let you know when it's out.</p>
       <form class="signup signup--center" data-signup novalidate>
         <label class="visually-hidden" for="email-closing">Email address</label>
         <div class="signup-row">
           <input id="email-closing" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required />
           <button type="submit">Join the waitlist</button>
         </div>
-        <p class="signup-note" data-note>16+ only. We'll never share your email.</p>
+        <p class="signup-note" data-note>You need to be 16 or older to use PNYX. We won't share your email.</p>
       </form>
     </section>
   </main>

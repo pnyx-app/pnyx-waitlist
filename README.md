@@ -9,7 +9,9 @@ countdown `widget.html`. Hosted as a Render static site (`render.yaml`).
 |---|---|
 | `launch.js` | The launch moment (2 Nov 2026, 00:00 CET). Change the date here only. |
 | `flip.js` | Animated countdown digits, shared by the site and the widget. |
-| `main.js` | Hero crest, countdown, Values-grid demo, grid list, signup form. `WAITLIST_ENDPOINT` at the top. |
+| `main.js` | Rotating type crest, countdown, signup form. `WAITLIST_ENDPOINT` at the top. |
+| `flow.js` | The app's animated FLOW gradient (port of `FlowBackground.tsx`). |
+| `assets/screens/` | App screens from `pnyx-native/figma-screenshots`, as JPEGs. |
 | `widget.html` | Embeddable countdown card — embed instructions are in its header comment. |
 | `assets/animals/` | Downscaled copies of `pnyx-native/assets/images/animals`. |
 

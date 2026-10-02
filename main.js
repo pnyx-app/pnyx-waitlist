@@ -115,32 +115,6 @@
     return best;
   }
 
-  /** Shortest prefix that keeps every name on a grid unique — same rule as algorithm.ts. */
-  var codeLenCache = {};
-  function codeLength(grid) {
-    if (codeLenCache[grid]) return codeLenCache[grid];
-    var names = GRIDS[grid].points.map(function (p) { return p.name.toUpperCase(); });
-    var longest = Math.max.apply(null, names.map(function (n) { return n.length; }));
-    var len = 2;
-    while (len < longest) {
-      var seen = {}, unique = true;
-      for (var i = 0; i < names.length; i++) {
-        var pre = names[i].slice(0, len);
-        if (seen[pre]) { unique = false; break; }
-        seen[pre] = true;
-      }
-      if (unique) break;
-      len++;
-    }
-    return (codeLenCache[grid] = len);
-  }
-
-  function identityCode(positions) {
-    return GRID_IDS.map(function (g) {
-      return nearestPoint(g, positions[g]).name.slice(0, codeLength(g)).toUpperCase();
-    }).join("·");
-  }
-
   // ── Colour helpers (ported from theme/tokens.ts glossGradient) ────────
   function parseHex(hex) {
     var n = parseInt(hex.replace("#", ""), 16);
@@ -232,7 +206,6 @@
   (function heroCrest() {
     var el = document.querySelector("[data-hero-crest]");
     var nameEl = document.querySelector("[data-hero-name]");
-    var codeEl = document.querySelector("[data-hero-code]");
     if (!el) return;
     var preview = [
       { values: { x: 1, y: 1 }, culture: { x: -1, y: -1 } },
@@ -247,7 +220,6 @@
       var colors = crestColors(pos);
       paintCrest(el, colors);
       nameEl.textContent = cap(colors.animal) + " · " + nearestPoint("values", pos.values).name;
-      codeEl.textContent = identityCode(pos);
     }
     show(0);
     // Warm the cache so swaps don't flash an empty plate.
@@ -285,7 +257,7 @@
       if (ms <= 0) {
         clock.hidden = true;
         live.hidden = false;
-        if (inline) inline.parentElement.textContent = "PNYX is open.";
+        if (inline) inline.parentElement.textContent = "PNYX is out.";
         clearInterval(timer);
         return;
       }
@@ -304,167 +276,6 @@
     }
     tick();
     timer = setInterval(tick, 1000);
-  })();
-
-  // ── Values-grid demo ─────────────────────────────────────────────────
-  (function demo() {
-    var svg = document.querySelector("[data-plane]");
-    if (!svg) return;
-    var NS = "http://www.w3.org/2000/svg";
-    var S = 100; // grid unit → svg units; y is flipped so Traditionalist is up.
-
-    // Value coordinates per take: x Individualist(-1) ↔ Communitarian(+1), y Progressive(-1) ↔ Traditionalist(+1).
-    var TAKES = [
-      { text: "Grandparents' recipes should never be “improved.”", x: 0.35, y: 0.85 },
-      { text: "You owe your hometown nothing.", x: -0.85, y: -0.15 },
-      { text: "Taxes are the membership fee for a decent society.", x: 0.85, y: -0.35 },
-      { text: "Most rules exist for people who can't think for themselves.", x: -0.75, y: -0.6 },
-      { text: "Sunday lunch with family is non-negotiable.", x: 0.75, y: 0.75 },
-      { text: "Tradition is just peer pressure from dead people.", x: -0.35, y: -0.95 },
-      { text: "Being self-made is mostly a myth.", x: 0.6, y: -0.4 },
-      { text: "Some things should stay exactly the way they've always been.", x: 0, y: 0.95 },
-    ];
-    var RATE = 0.38;
-
-    function el(tag, attrs, parent) {
-      var n = document.createElementNS(NS, tag);
-      for (var k in attrs) n.setAttribute(k, attrs[k]);
-      (parent || svg).appendChild(n);
-      return n;
-    }
-
-    el("rect", { class: "frame", x: -S, y: -S, width: 2 * S, height: 2 * S, rx: 6 });
-    el("line", { class: "axis", x1: -S, y1: 0, x2: S, y2: 0 });
-    el("line", { class: "axis", x1: 0, y1: -S, x2: 0, y2: S });
-    el("text", { class: "axis-label", x: 0, y: -S - 8, "text-anchor": "middle" }).textContent = "Traditionalist";
-    el("text", { class: "axis-label", x: 0, y: S + 16, "text-anchor": "middle" }).textContent = "Progressive";
-    el("text", { class: "axis-label", x: 0, y: 0, "text-anchor": "middle", transform: "translate(" + (-S - 10) + " 0) rotate(-90)" }).textContent = "Individualist";
-    el("text", { class: "axis-label", x: 0, y: 0, "text-anchor": "middle", transform: "translate(" + (S + 10) + " 0) rotate(90)" }).textContent = "Communitarian";
-
-    var refs = {};
-    GRIDS.values.points.forEach(function (p) {
-      var cx = p.x * S, cy = -p.y * S;
-      var dot = el("circle", { class: "ref", cx: cx, cy: cy, r: 2.6 });
-      var label = el("text", { class: "ref-label", x: cx, y: cy + (p.y === 1 ? -6 : 10), "text-anchor": "middle" });
-      label.textContent = cap(p.animal);
-      refs[p.name] = [dot, label];
-    });
-
-    var trail = el("polyline", { class: "trail", points: "0,0" });
-    var you = el("g", { class: "you-group" });
-    el("circle", { class: "you-ring", r: 9 }, you);
-    el("circle", { class: "you", r: 4.5 }, you);
-
-    var takeEl = document.querySelector("[data-take]");
-    var countEl = document.querySelector("[data-take-count]");
-    var crestEl = document.querySelector("[data-demo-crest]");
-    var nameEl = document.querySelector("[data-demo-name]");
-    var meaningEl = document.querySelector("[data-demo-meaning]");
-    var voteBtns = Array.prototype.slice.call(document.querySelectorAll("[data-vote]"));
-
-    var pos, path, index, lastNear;
-
-    function render() {
-      you.style.transform = "translate(" + pos.x * S + "px, " + -pos.y * S + "px)";
-      trail.setAttribute("points", path.map(function (p) { return p.x * S + "," + -p.y * S; }).join(" "));
-      var near = nearestPoint("values", pos);
-      if (near !== lastNear) {
-        if (lastNear) refs[lastNear.name].forEach(function (n) { n.classList.remove("is-near"); });
-        refs[near.name].forEach(function (n) { n.classList.add("is-near"); });
-        lastNear = near;
-        paintCrest(crestEl, crestColors(positionsWith({ values: pos })));
-        nameEl.textContent = cap(near.animal) + " · " + near.name;
-        meaningEl.textContent = near.meaning;
-      }
-    }
-
-    function showTake() {
-      var done = index >= TAKES.length;
-      voteBtns.forEach(function (b) { b.disabled = done; });
-      if (done) {
-        countEl.textContent = "That's all 8";
-        takeEl.textContent = "That's one grid from eight takes. The app does this for all five, from every reaction.";
-        return;
-      }
-      countEl.textContent = "Take " + (index + 1) + " of " + TAKES.length;
-      takeEl.textContent = TAKES[index].text;
-    }
-
-    function swapTake() {
-      if (reduceMotion) return showTake();
-      takeEl.classList.add("is-fading");
-      setTimeout(function () { showTake(); takeEl.classList.remove("is-fading"); }, 180);
-    }
-
-    function reset() {
-      pos = { x: 0, y: 0 };
-      path = [{ x: 0, y: 0 }];
-      index = 0;
-      render();
-      showTake();
-    }
-
-    voteBtns.forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        if (index >= TAKES.length) return;
-        var w = parseFloat(btn.getAttribute("data-vote"));
-        var t = TAKES[index];
-        // Positive votes pull toward the take, negative ones push away from it.
-        var dx = (t.x - pos.x) * RATE * w;
-        var dy = (t.y - pos.y) * RATE * w;
-        pos = {
-          x: Math.max(-1, Math.min(1, pos.x + dx)),
-          y: Math.max(-1, Math.min(1, pos.y + dy)),
-        };
-        path.push(pos);
-        index++;
-        render();
-        swapTake();
-      });
-    });
-    document.querySelector("[data-reset]").addEventListener("click", reset);
-    reset();
-  })();
-
-  // ── Grid list ─────────────────────────────────────────────────────────
-  (function gridList() {
-    var list = document.querySelector("[data-grid-list]");
-    if (!list) return;
-    GRID_IDS.forEach(function (id, i) {
-      var g = GRIDS[id];
-      var li = document.createElement("li");
-      li.className = "grid-row";
-      li.innerHTML =
-        '<span class="grid-index">0' + (i + 1) + "</span>" +
-        '<h3 class="grid-name">' + g.title + "</h3>" +
-        '<p class="grid-axes"><span>' + g.axes[0] + "</span><span>" + g.axes[1] + "</span></p>" +
-        '<div class="grid-shape"><span class="label">' + g.shapes + "</span></div>";
-      var shape = li.querySelector(".grid-shape");
-      if (id === "values") {
-        var row = document.createElement("div");
-        row.className = "mini-animals";
-        g.points.forEach(function (p) {
-          var c = document.createElement("span");
-          c.className = "crest";
-          c.title = cap(p.animal) + " · " + p.name;
-          paintCrest(c, crestColors(positionsWith({ values: p })));
-          row.appendChild(c);
-        });
-        shape.appendChild(row);
-      } else {
-        var sw = document.createElement("div");
-        sw.className = "swatches";
-        g.points.forEach(function (p) {
-          var s = document.createElement("span");
-          s.className = "swatch";
-          s.style.background = p.hex;
-          s.title = p.name;
-          sw.appendChild(s);
-        });
-        shape.appendChild(sw);
-      }
-      list.appendChild(li);
-    });
   })();
 
   // ── Signup ────────────────────────────────────────────────────────────
