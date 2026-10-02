@@ -487,12 +487,25 @@
       if (saved) markDone(saved);
     } catch (e) { /* storage unavailable — fine */ }
 
+    // The API sleeps when idle (Render free tier) and takes ~20s to wake. Nudge
+    // it as soon as the page loads, and again when someone starts typing, so
+    // it's usually awake by the time they press the button. A no-cors GET of
+    // /health needs no CORS permission — the response is never read.
+    var lastWake = 0;
+    function wake() {
+      if (!WAITLIST_ENDPOINT || Date.now() - lastWake < 60000) return;
+      lastWake = Date.now();
+      fetch(new URL("/health", WAITLIST_ENDPOINT).href, { mode: "no-cors", cache: "no-store" }).catch(function () {});
+    }
+    wake();
+
     forms.forEach(function (form) {
       var input = form.querySelector("input");
       var button = form.querySelector("button");
       var note = form.querySelector("[data-note]");
       var original = note.textContent;
 
+      input.addEventListener("focus", wake);
       input.addEventListener("input", function () {
         if (note.classList.contains("is-error")) {
           note.classList.remove("is-error");
