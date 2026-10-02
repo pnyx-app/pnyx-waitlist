@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PNYX — Join the waitlist</title>
+  <meta name="description" content="PNYX is a short-form feed where every reaction you cast places you on five personality grids. No quiz, no ads. Opens 2 November 2026." />
+  <meta name="theme-color" content="#f2f0ec" />
+  <meta property="og:title" content="PNYX — Everyone should know what everyone really thinks." />
+  <meta property="og:description" content="React to real content. Get a personality you earned, not one you picked. Opens 2 November 2026." />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top wrap">
+    <a class="wordmark" href="#" aria-label="PNYX home">PNYX</a>
+    <div class="top-meta">
+      <span class="top-date">Opens 02.11.2026</span>
+      <a class="top-link" href="#join">Join the waitlist</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero wrap" id="join">
+      <div class="hero-copy">
+        <p class="label">A short-form social app &middot; coming to iOS</p>
+        <h1>Everyone should know what everyone really thinks.</h1>
+        <p class="lede">
+          PNYX is a feed of short videos, images and opinions. There's no personality quiz.
+          Every reaction you cast quietly moves you across five grids, until a type emerges
+          that's actually yours.
+        </p>
+
+        <form class="signup" data-signup novalidate>
+          <label class="visually-hidden" for="email-hero">Email address</label>
+          <div class="signup-row">
+            <input id="email-hero" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required />
+            <button type="submit">Join the waitlist</button>
+          </div>
+          <p class="signup-note" data-note>One email when the doors open. Nothing else, and no ads, ever.</p>
+        </form>
+
+        <section class="countdown" aria-labelledby="countdown-title">
+          <div class="countdown-head">
+            <p class="label" id="countdown-title">Doors open</p>
+            <p class="countdown-date"><time datetime="2026-11-02T00:00:00+01:00">Monday, 2 November 2026</time></p>
+          </div>
+          <div class="clock" data-clock role="timer" aria-live="off">
+            <div class="unit"><span class="num" data-days>30</span><span class="unit-label">Days</span></div>
+            <div class="unit"><span class="num" data-hours>00</span><span class="unit-label">Hours</span></div>
+            <div class="unit"><span class="num" data-minutes>00</span><span class="unit-label">Min</span></div>
+            <div class="unit"><span class="num" data-seconds>00</span><span class="unit-label">Sec</span></div>
+          </div>
+          <p class="clock-live" data-live hidden>PNYX is open. Check your inbox.</p>
+        </section>
+      </div>
+
+      <figure class="hero-crest" aria-label="A sample PNYX identity">
+        <div class="crest-stage">
+          <div class="crest crest--xl" data-hero-crest></div>
+        </div>
+        <figcaption>
+          <span class="crest-name" data-hero-name>Wolf</span>
+          <span class="crest-code" data-hero-code>LO·GREY·TE·EL·CHA</span>
+          <span class="crest-hint">A sample type. Yours unlocks after 50 reactions.</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- Demo -->
+    <section class="demo wrap" aria-labelledby="demo-title">
+      <div class="section-head">
+        <p class="label">01 &mdash; Try it</p>
+        <h2 id="demo-title">React. Don't describe yourself.</h2>
+        <p class="section-sub">
+          Vote on a few takes below and watch where they put you on the Values grid &mdash; one of five.
+          Love and like pull you toward a take; dislike and hate push you away.
+        </p>
+      </div>
+
+      <div class="demo-body">
+        <div class="take-card">
+          <div class="take-meta">
+            <span class="label" data-take-count>Take 1 of 8</span>
+            <button class="text-btn" type="button" data-reset>Start over</button>
+          </div>
+          <blockquote class="take" data-take>Grandparents' recipes should never be "improved."</blockquote>
+          <div class="votes" role="group" aria-label="Your reaction">
+            <button type="button" class="vote vote--down" data-vote="-1">Hate</button>
+            <button type="button" class="vote vote--down" data-vote="-0.5">Dislike</button>
+            <button type="button" class="vote vote--up" data-vote="0.5">Like</button>
+            <button type="button" class="vote vote--up" data-vote="1">Love</button>
+          </div>
+          <div class="take-result" data-result>
+            <div class="crest crest--md" data-demo-crest></div>
+            <div>
+              <p class="label">Closest type so far</p>
+              <p class="result-name" data-demo-name>Dragon &middot; Adapt</p>
+              <p class="result-meaning" data-demo-meaning>Balances independence and belonging</p>
+            </div>
+          </div>
+          <p class="demo-foot">A simplified, single-grid version. In the app it takes 50 reactions across all five grids, and the math runs on our servers.</p>
+        </div>
+
+        <div class="plane-wrap">
+          <svg class="plane" viewBox="-130 -130 260 260" data-plane role="img" aria-label="Values grid showing your position">
+            <title>Values grid</title>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Five grids -->
+    <section class="grids wrap" aria-labelledby="grids-title">
+      <div class="section-head">
+        <p class="label">02 &mdash; The five grids</p>
+        <h2 id="grids-title">Five planes. One portrait.</h2>
+        <p class="section-sub">
+          Every post is scored against the same five grids before anyone sees it. Each grid shapes one part of your identity.
+        </p>
+      </div>
+      <ol class="grid-list" data-grid-list></ol>
+    </section>
+
+    <!-- Principles -->
+    <section class="principles wrap" aria-labelledby="principles-title">
+      <div class="section-head">
+        <p class="label">03 &mdash; What we won't do</p>
+        <h2 id="principles-title">Built so it can't flatter you.</h2>
+      </div>
+      <dl class="principle-list">
+        <div>
+          <dt>Earned, not chosen.</dt>
+          <dd>Your position is computed from what you actually reacted to. You can't edit it, and you can't answer the way you'd like to be seen.</dd>
+        </div>
+        <div>
+          <dt>Unpopular is allowed.</dt>
+          <dd>Crude, contrarian, uncomfortable &mdash; if a take is genuine and within the rules, it belongs in the feed.</dd>
+        </div>
+        <div>
+          <dt>You decide who sees you.</dt>
+          <dd>Three privacy tiers set how much of your profile other people can see, from your full type to nothing at all.</dd>
+        </div>
+        <div>
+          <dt>No ads. Ever.</dt>
+          <dd>PNYX is free, and there is no ad inventory to sell. The feed isn't built to keep you scrolling for someone else.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- Closing CTA -->
+    <section class="closing wrap" aria-labelledby="closing-title">
+      <h2 id="closing-title">Find out what you really think.</h2>
+      <p class="closing-sub"><span data-days-inline>30 days</span> until the doors open. Get one email when they do.</p>
+      <form class="signup signup--center" data-signup novalidate>
+        <label class="visually-hidden" for="email-closing">Email address</label>
+        <div class="signup-row">
+          <input id="email-closing" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required />
+          <button type="submit">Join the waitlist</button>
+        </div>
+        <p class="signup-note" data-note>16+ only. We'll never share your email.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="foot wrap">
+    <div class="foot-inner">
+      <span class="wordmark wordmark--sm">PNYX</span>
+      <span>&copy; 2026 PNYX</span>
+    </div>
+  </footer>
+
+  <script src="launch.js" defer></script>
+  <script src="flip.js" defer></script>
+  <script src="main.js" defer></script>
+</body>
+</html>

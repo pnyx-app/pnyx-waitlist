@@ -1,0 +1,186 @@
+<!doctype html>
+<!--
+  PNYX launch countdown — embeddable widget.
+
+  Embed:
+    <iframe src="https://YOUR-DOMAIN/widget.html" width="360" height="164"
+            style="border:0" title="PNYX launch countdown" loading="lazy"></iframe>
+
+  Query params:
+    theme=light | dark   (default light; dark matches the site's countdown band)
+    cta=0                hide the "Join the waitlist" link (height ~110)
+
+  The page background is transparent, so only the card shows on the host page.
+  It fills the iframe's width; below ~300px it switches to a compact layout.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PNYX countdown</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Same tokens as styles.css / pnyx-native theme/tokens.ts. */
+    :root {
+      --card: #faf9f6;
+      --line: #dcd9d2;
+      --text: #161513;
+      --text-dim: #4b4945;
+      --text-faint: #67645e;
+      --rule: #e8e5df;
+      --display: "Familjen Grotesk", ui-sans-serif, system-ui, sans-serif;
+      --body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    :root[data-theme="dark"] {
+      --card: #161513;
+      --line: #2a2825;
+      --text: #ffffff;
+      --text-dim: #d6d3cc;
+      --text-faint: #a8a49c;
+      --rule: #3a3834;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; background: transparent; overflow: hidden; }
+    [hidden] { display: none !important; }
+    body {
+      font-family: var(--body);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      padding: 1px; /* keeps the card border inside the iframe edge */
+    }
+
+    .card {
+      container-type: inline-size;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+    .wordmark { font-family: var(--display); font-weight: 700; font-size: 15px; letter-spacing: 0.24em; }
+    .when {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      white-space: nowrap;
+    }
+
+    .clock { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .unit { display: grid; gap: 2px; padding-inline: 12px; border-left: 1px solid var(--rule); }
+    .unit:first-child { padding-left: 0; border-left: 0; }
+    .unit:last-child { padding-right: 0; }
+    .num {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 34px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+    .label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    .live { font-family: var(--display); font-weight: 600; font-size: 24px; line-height: 1.15; }
+
+    .cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid var(--rule);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .cta span:last-child { transition: transform 160ms var(--ease); }
+    .cta:hover span:last-child { transform: translateX(3px); }
+    .cta:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; border-radius: 4px; }
+
+    /* Compact: narrow embeds (sidebars, link-in-bio pages). */
+    @container (max-width: 300px) {
+      .num { font-size: 26px; }
+      .unit { padding-inline: 8px; }
+      .label { font-size: 9px; letter-spacing: 0.06em; }
+      .when { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="head">
+      <span class="wordmark">PNYX</span>
+      <span class="when"><time datetime="2026-11-02T00:00:00+01:00">Opens 2 Nov 2026</time></span>
+    </div>
+
+    <div class="clock" data-clock role="timer" aria-live="off">
+      <div class="unit"><span class="num" data-days>00</span><span class="label">Days</span></div>
+      <div class="unit"><span class="num" data-hours>00</span><span class="label">Hours</span></div>
+      <div class="unit"><span class="num" data-minutes>00</span><span class="label">Min</span></div>
+      <div class="unit"><span class="num" data-seconds>00</span><span class="label">Sec</span></div>
+    </div>
+    <p class="live" data-live hidden style="margin:0">PNYX is open.</p>
+
+    <a class="cta" data-cta href="./#join" target="_blank" rel="noopener">
+      <span data-cta-text>Join the waitlist</span><span aria-hidden="true">&rarr;</span>
+    </a>
+  </div>
+
+  <script src="launch.js"></script>
+  <script src="flip.js"></script>
+  <script>
+    (function () {
+      var params = new URLSearchParams(location.search);
+      if (params.get("theme") === "dark") document.documentElement.setAttribute("data-theme", "dark");
+      if (params.get("cta") === "0") document.querySelector("[data-cta]").hidden = true;
+
+      var LAUNCH = window.PNYX_LAUNCH;
+      var clock = document.querySelector("[data-clock]");
+      var live = document.querySelector("[data-live]");
+      var ctaText = document.querySelector("[data-cta-text]");
+      var el = {
+        d: document.querySelector("[data-days]"),
+        h: document.querySelector("[data-hours]"),
+        m: document.querySelector("[data-minutes]"),
+        s: document.querySelector("[data-seconds]"),
+      };
+      var pad = function (n) { return String(n).padStart(2, "0"); };
+      var timer;
+
+      function tick() {
+        var ms = LAUNCH.getTime() - Date.now();
+        if (ms <= 0) {
+          clock.hidden = true;
+          live.hidden = false;
+          ctaText.textContent = "Get the app";
+          clearInterval(timer);
+          return;
+        }
+        var s = Math.floor(ms / 1000);
+        var d = Math.floor(s / 86400), h = Math.floor((s % 86400) / 3600), m = Math.floor((s % 3600) / 60);
+        window.PNYX_setDigits(el.d, pad(d));
+        window.PNYX_setDigits(el.h, pad(h));
+        window.PNYX_setDigits(el.m, pad(m));
+        window.PNYX_setDigits(el.s, pad(s % 60));
+        clock.setAttribute("aria-label", d + " days, " + h + " hours and " + m + " minutes until PNYX opens");
+      }
+      tick();
+      timer = setInterval(tick, 1000);
+    })();
+  </script>
+</body>
+</html>
